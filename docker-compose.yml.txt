@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  gtts:
+    image: python:3.9-slim
+    command: python /app/app.py
+    working_dir: /app
+    ports:
+      - "5000:5000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gtts.rule=Host(`tts.roboncuk.com`)"
+      - "traefik.http.routers.gtts.entrypoints=websecure"
+      - "traefik.http.routers.gtts.tls.certresolver=lets-encrypt"
+      - "traefik.http.services.gtts.loadbalancer.server.port=5000"
